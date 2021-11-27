@@ -23,7 +23,9 @@ const UserTable = ({ users }) => {
     VIP: { order: vipOrder, fn: setVipOrder },
   };
 
-  const sortData = (col, currentOrder, fn) => {
+  const sortData = (col) => {
+    let currentOrder = ORDER_MAP[col].order;
+    const fn = ORDER_MAP[col].fn;
     if (!currentOrder) currentOrder = "DSC";
     const sortConstant = currentOrder === "ASC" ? 1 : -1;
     const newOrder = currentOrder === "ASC" ? "DSC" : "ASC";
@@ -42,11 +44,7 @@ const UserTable = ({ users }) => {
     let header = Object.keys(userData[0]);
     return header.map((key, index) => {
       return (
-        <th
-          className="table-header"
-          key={index}
-          onClick={() => sortData(key, ORDER_MAP[key].order, ORDER_MAP[key].fn)}
-        >
+        <th className="table-header" key={index} onClick={() => sortData(key)}>
           {key.toUpperCase()}
         </th>
       );
